@@ -1,5 +1,5 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import com.android.build.api.dsl.ManagedVirtualDevice
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
@@ -29,11 +29,6 @@ kotlin {
         instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
-    js {
-        browser()
-        binaries.executable()
-    }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -52,13 +47,28 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.voyager.navigator)
+            implementation(libs.voyager.koin)
+            implementation(libs.voyager.screenmodel)
+
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.moko.mvvm)
+
             implementation(libs.ktor.core)
+            implementation(libs.ktor.logging)
+            implementation(libs.ktor.auth)
+            implementation(libs.ktor.negotiation)
+            implementation(libs.ktor.serialization.json)
+
             implementation(libs.kotlinx.serialization.json)
+
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+
+            implementation(libs.kstore)
+            implementation(libs.kstore.file)
+
+            implementation(libs.appDir)
         }
 
         commonTest.dependencies {
@@ -73,11 +83,6 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
-        }
-
-        jsMain.dependencies {
-            implementation(compose.html.core)
-            implementation(libs.ktor.client.js)
         }
 
         iosMain.dependencies {
